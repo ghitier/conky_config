@@ -34,6 +34,7 @@ color1 FFFFFF # white
 color2 0C2E8A # dark blue
 
 lua_load ~/Programs/conky_config/functions.lua # set path to the my_config.lua
+lua_startup_hook conky_init
 lua_draw_hook_post conky_main
 
 TEXT

@@ -1,50 +1,44 @@
 require 'cairo'
 
-function draw_cpu(cr, cores)
+function draw_cpu(cr, data)
 
-	local x, y = 70, 230
-	local w, h = 400, 20
 	local cpu = conky_parse("${cpu cpu0}")
 	local text = "CPU "..string.format("%02d", cpu).."%"
 
 	if cores == 0 then
-		draw_bar(cr, x, y, w, h, cpu, color1)
+		draw_bar(cr, data['x'], data['y'], data['w'], data['h'], cpu, data['bar_color'])
 	else
-		for i = 1, cores, 1 do
+		for i = 1, data['cores'], 1 do
 			cpu = conky_parse("${cpu cpu"..string.format("%d", i).."}")
-			draw_bar(cr, x, y + (h / cores) * (i - 1),
-						w, (h / cores) - 1, cpu, color1)
+			draw_bar(cr, data['x'], data['y'] + (data['h'] / data['cores']) * (i - 1),
+						data['w'], (data['h'] / data['cores']) - 1, cpu, data['bar_color'])
 		end
 	end
-	draw_text(cr, x + w + 38, y + h, text,
-				"Unispace", 22.0, color2)
-	mult, x, y, w, h, cpu, text = nil
+	draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
+				data['font'], data['font_size'], data['font_color'])
+	cpu, text = nil
 end
 
-function draw_ram(cr)
+function draw_ram(cr, data)
 
-	local x, y = 70, 190
-	local w, h = 400, 20
 	local ram = conky_parse("$memperc")
 	local text = "RAM "..string.format("%02d", ram).."%"
 	
-	draw_bar(cr, x, y, w, h, ram, color1)
-	draw_text(cr, x + w + 38, y + h, text,
-				"Unispace", 22.0, color2)
-	mult, x, y, w, h, ram, text = nil
+	draw_bar(cr, data['x'], data['y'], data['w'], data['h'], ram, data['bar_color'])
+	draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
+				data['font'], data['font_size'], data['font_color'])
+	ram, text = nil
 end
 
-function draw_disk(cr)
+function draw_disk(cr, data)
 
-	local x, y = 70, 150
-	local w, h = 400, 20
 	local disk = conky_parse("${fs_used_perc /}")
 	local text = "DISK "..string.format("%02d", disk).."%"
 
-	draw_bar(cr, x, y, w, h, disk, color1)
-	draw_text(cr, x + w + 25, y + h, text,
-				"Unispace", 22.0, color2)
-	mult, x, y, w, h, disk, text = nil
+	draw_bar(cr, data['x'], data['y'], data['w'], data['h'], disk, data['bar_color'])
+	draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
+				data['font'], data['font_size'], data['font_color'])
+	disk, text = nil
 end
 
 function draw_bar(cr, x, y, w, h, perc, color)
@@ -69,6 +63,43 @@ function hex_to_rgb(colour, alpha)
 	return ((colour / 0x10000) % 0x100) / 255., ((colour / 0x100) % 0x100) / 255., (colour % 0x100) / 255., alpha
 end
 
+function conky_init()
+
+	color1 = 0xFFFFFF
+    color2 = 0x0C2E8A	
+
+	cpu_data = {
+		cores = 4,
+		bar_color = color1,
+		font_color = color2,
+		x = 70, y = 230,
+		w = 400, h = 20,
+		text_pad = 38,
+		font = "Unispace",
+		font_size = 22.0,
+	}
+
+	ram_data = {
+		bar_color = color1,
+		font_color = color2,
+		x = 70, y = 190,
+		w = 400, h = 20,
+		text_pad = 38,
+		font = "Unispace",
+		font_size = 22.0,
+	}
+
+	disk_data = {
+		bar_color = color1,
+		font_color = color2,
+		x = 70, y = 150,
+		w = 400, h = 20,
+		text_pad = 25,
+		font = "Unispace",
+		font_size = 22.0,
+	}
+end
+
 function conky_main()
 	if conky_window == nil
 		then
@@ -82,16 +113,11 @@ function conky_main()
     									conky_window.height)
     local cr = cairo_create(cs)
     local updates = tonumber(conky_parse('${updates}'))
-    
-    color1 = 0xFFFFFF
-    color2 = 0x0C2E8A
-    cpu_cores = 4 -- Number of CPU cores (0 for sum of all CPU cores)
 
-    if updates > 5
-    	then
-    		draw_disk(cr)
-    		draw_ram(cr)
-    		draw_cpu(cr, cpu_cores)
+    if updates > 5 then
+    	draw_disk(cr, disk_data)
+    	draw_ram(cr, ram_data)
+    	draw_cpu(cr, cpu_data)
     end
 
     cairo_surface_destroy(cs)
