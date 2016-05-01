@@ -19,3 +19,9 @@
 > Tested with Ubuntu 14.04 LTS<br>
 > You can set the values inside <code>conky_init</code> function to fit your needs<br>
 > (inside the functions.lua file).
+
+----------
+
+<h3>SCREENSHOTS</h3>
+
+![Screen 1](http://img11.hostingpics.net/pics/816258conkyscreenshot.png)
