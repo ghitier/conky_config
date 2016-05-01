@@ -36,6 +36,7 @@ color2 0C2E8A # dark blue
 lua_load ~/Programs/conky_config/functions.lua # set path to the my_config.lua
 lua_startup_hook conky_init
 lua_draw_hook_post conky_main
+lua_shutdown_hook conky_free
 
 TEXT
 ${font Unispace:size=38}$alignr${time %H}:${time %M}${color2}${font Unispace:size=28}:${time %S}

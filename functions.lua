@@ -100,6 +100,15 @@ function conky_init()
 	}
 end
 
+function conky_free()
+	color1 = nil
+	color2 = nil
+	cpu_data = nil
+	ram_data = nil
+	disk_data = nil
+	collectgarbage("collect")
+end
+
 function conky_main()
 	if conky_window == nil
 		then
