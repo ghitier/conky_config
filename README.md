@@ -24,4 +24,4 @@
 
 <h3>SCREENSHOTS</h3>
 
-![Screen 1](http://img11.hostingpics.net/pics/901673conkyscreenshot.png)
+![Screenshot V0.4](http://img11.hostingpics.net/pics/996716conkyscreenV04.png)
