@@ -3,7 +3,7 @@ require 'cairo'
 function draw_cpu(cr, data)
 
 	local cpu = conky_parse("${cpu cpu0}")
-	local text = "CPU "..string.format("%02d", cpu).."%"
+	local text = "CPU "..string.format("%02d", tonumber(cpu)).."%"
 
 	if cores == 0 then
 		draw_bar(cr, data['x'], data['y'], data['w'], data['h'], cpu, data['bar_color'])
@@ -22,7 +22,7 @@ end
 function draw_ram(cr, data)
 
 	local ram = conky_parse("$memperc")
-	local text = "RAM "..string.format("%02d", ram).."%"
+	local text = "RAM "..string.format("%02d", tonumber(ram)).."%"
 	
 	draw_bar(cr, data['x'], data['y'], data['w'], data['h'], ram, data['bar_color'])
 	draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
@@ -33,7 +33,7 @@ end
 function draw_disk(cr, data)
 
 	local disk = conky_parse("${fs_used_perc /}")
-	local text = "DISK "..string.format("%02d", disk).."%"
+	local text = "DISK "..string.format("%02d", tonumber(disk)).."%"
 
 	draw_bar(cr, data['x'], data['y'], data['w'], data['h'], disk, data['bar_color'])
 	draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
@@ -83,7 +83,7 @@ function conky_init()
 		cores = 4,
 		bar_color = color1,
 		font_color = color2,
-		x = 70, y = 230,
+		x = 1370, y = 230,
 		w = 400, h = 20,
 		text_pad = 38,
 		font = "Unispace",
@@ -93,7 +93,7 @@ function conky_init()
 	ram_data = {
 		bar_color = color1,
 		font_color = color2,
-		x = 70, y = 190,
+		x = 1370, y = 190,
 		w = 400, h = 20,
 		text_pad = 38,
 		font = "Unispace",
@@ -103,7 +103,7 @@ function conky_init()
 	disk_data = {
 		bar_color = color1,
 		font_color = color2,
-		x = 70, y = 150,
+		x = 1370, y = 150,
 		w = 400, h = 20,
 		text_pad = 25,
 		font = "Unispace",
@@ -112,25 +112,25 @@ function conky_init()
 
 	clock_data = {
 		{
-			x = 380, y = 130,
+			x = 1670, y = 130,
 			font = "Unispace",
 			font_size = 58.0,
 			font_color = color1,
 		},
 		{
-			x = 480, y = 130,
+			x = 1770, y = 130,
 			font = "Unispace",
 			font_size = 58.0,
 			font_color = color1,
 		},
 		{
-			x = 560, y = 105,
+			x = 1850, y = 105,
 			font = "Unispace",
 			font_size = 24.0,
 			font_color = color2,
 		},
 		{
-			x = 560, y = 130,
+			x = 1850, y = 130,
 			font = "Neuropolitical",
 			font_size = 22.0,
 			font_color = color2,
