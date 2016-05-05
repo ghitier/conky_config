@@ -41,6 +41,17 @@ function draw_disk(cr, data)
 	disk, text = nil
 end
 
+function draw_clock(cr, data)
+
+	local time = {conky_parse("${time %H}")..":", conky_parse("${time %M}"),
+				conky_parse("${time %S}"), conky_parse("${time %a}")}
+	for i = 1, 4, 1 do
+		draw_text(cr, data[i]['x'], data[i]['y'], time[i], data[i]['font'],
+					data[i]['font_size'], data[i]['font_color'])
+	end
+	time = nil
+end
+
 function draw_bar(cr, x, y, w, h, perc, color)
 	cairo_set_source_rgba(cr,hex_to_rgb(color, 1))
 	cairo_rectangle(cr, x + w, y, -(perc * (w / 100)), h)
@@ -98,6 +109,33 @@ function conky_init()
 		font = "Unispace",
 		font_size = 22.0,
 	}
+
+	clock_data = {
+		{
+			x = 380, y = 130,
+			font = "Unispace",
+			font_size = 58.0,
+			font_color = color1,
+		},
+		{
+			x = 480, y = 130,
+			font = "Unispace",
+			font_size = 58.0,
+			font_color = color1,
+		},
+		{
+			x = 560, y = 105,
+			font = "Unispace",
+			font_size = 24.0,
+			font_color = color2,
+		},
+		{
+			x = 560, y = 130,
+			font = "Neuropolitical",
+			font_size = 22.0,
+			font_color = color2,
+		},
+	}
 end
 
 function conky_free()
@@ -124,6 +162,7 @@ function conky_main()
     local updates = tonumber(conky_parse('${updates}'))
 
     if updates > 5 then
+    	draw_clock(cr, clock_data)
     	draw_disk(cr, disk_data)
     	draw_ram(cr, ram_data)
     	draw_cpu(cr, cpu_data)

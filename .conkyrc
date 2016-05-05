@@ -39,5 +39,3 @@ lua_draw_hook_post conky_main
 lua_shutdown_hook conky_free
 
 TEXT
-${font Unispace:size=38}$alignr${time %H}:${time %M}${color2}${font Unispace:size=28}:${time %S}
-${font Neuropolitical:size=42}$alignr${color2}$nodename
