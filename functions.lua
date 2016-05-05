@@ -83,7 +83,7 @@ function conky_init()
 		cores = 4,
 		bar_color = color1,
 		font_color = color2,
-		x = 1370, y = 230,
+		x = 1370, y = 430,
 		w = 400, h = 20,
 		text_pad = 38,
 		font = "Unispace",
@@ -93,7 +93,7 @@ function conky_init()
 	ram_data = {
 		bar_color = color1,
 		font_color = color2,
-		x = 1370, y = 190,
+		x = 1370, y = 390,
 		w = 400, h = 20,
 		text_pad = 38,
 		font = "Unispace",
@@ -103,7 +103,7 @@ function conky_init()
 	disk_data = {
 		bar_color = color1,
 		font_color = color2,
-		x = 1370, y = 150,
+		x = 1370, y = 350,
 		w = 400, h = 20,
 		text_pad = 25,
 		font = "Unispace",
@@ -112,25 +112,25 @@ function conky_init()
 
 	clock_data = {
 		{
-			x = 1670, y = 130,
+			x = 1670, y = 330,
 			font = "Unispace",
 			font_size = 58.0,
 			font_color = color1,
 		},
 		{
-			x = 1770, y = 130,
+			x = 1770, y = 330,
 			font = "Unispace",
 			font_size = 58.0,
 			font_color = color1,
 		},
 		{
-			x = 1850, y = 105,
+			x = 1850, y = 305,
 			font = "Unispace",
 			font_size = 24.0,
 			font_color = color2,
 		},
 		{
-			x = 1850, y = 130,
+			x = 1850, y = 330,
 			font = "Neuropolitical",
 			font_size = 22.0,
 			font_color = color2,
