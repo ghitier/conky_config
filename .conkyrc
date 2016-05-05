@@ -33,11 +33,9 @@ default_color FFFFFF # white
 color1 FFFFFF # white
 color2 0C2E8A # dark blue
 
-lua_load [PATH]/functions.lua # set path to the functions.lua
+lua_load ~/Programs/conky_config/functions.lua # set path to the functions.lua
 lua_startup_hook conky_init
 lua_draw_hook_post conky_main
 lua_shutdown_hook conky_free
 
 TEXT
-${font Unispace:size=38}$alignr${time %H}:${time %M}${color2}${font Unispace:size=28}:${time %S}
-${font Neuropolitical:size=42}$alignr${color2}$nodename
