@@ -19,6 +19,17 @@ function draw_cpu(cr, data)
 	cpu, text = nil
 end
 
+function draw_gpu(cr, data)
+
+   local gpu = tonumber(conky_parse("${exec nvidia-settings -tq GPUUtilization | grep -o 'graphics=[0-9]*' | sed -e 's/graphics=//'}")) or 0;
+   local text = "GPU "..string.format("%02d", gpu).."%"
+
+   draw_bar(cr, data['x'], data['y'], data['w'], data['h'], gpu, data['bar_color'])
+   draw_text(cr, data['x'] + data['w'] + data['text_pad'], data['y'] + data['h'], text,
+	     data['font'], data['font_size'], data['font_color'])
+   gpu, text = nil
+end
+
 function draw_ram(cr, data)
 
 	local ram = conky_parse("$memperc")
@@ -77,8 +88,18 @@ end
 function conky_init()
 
 	color1 = 0xFFFFFF
-    color2 = 0x0C2E8A	
+	color2 = 0x0C2E8A	
 
+	gpu_data = {
+		bar_color = color1,
+		font_color = color2,
+		x = 1370, y = 470,
+		w = 400, h = 20,
+		text_pad = 38,
+		font = "Unispace",
+		font_size = 22.0,
+	}
+	
 	cpu_data = {
 		cores = 4,
 		bar_color = color1,
@@ -144,6 +165,7 @@ function conky_free()
 	cpu_data = nil
 	ram_data = nil
 	disk_data = nil
+	gpu_data = nil
 	collectgarbage("collect")
 end
 
@@ -166,6 +188,7 @@ function conky_main()
     	draw_disk(cr, disk_data)
     	draw_ram(cr, ram_data)
     	draw_cpu(cr, cpu_data)
+	draw_gpu(cr, gpu_data)
     end
 
     cairo_surface_destroy(cs)
